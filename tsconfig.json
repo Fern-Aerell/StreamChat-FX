@@ -1,0 +1,32 @@
+{
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    /* Specify paths and structure */
+    "outDir": "dist/service",                               /* Specify the output directory for compiled files. */
+    "rootDir": "src",                               /* Specify the root directory of source files. */
+
+    /* Language and environment settings */
+    "target": "es2020",                            /* Use a modern JavaScript version for compatibility and performance. */
+    "module": "commonjs",                          /* Use CommonJS module format for compatibility with Node.js. */
+    "lib": ["es2020", "DOM"],                             /* Include the latest ECMAScript features. */
+    "esModuleInterop": true,                         /* Enable interoperability between CommonJS and ESModules. */
+    "forceConsistentCasingInFileNames": true,        /* Ensure consistent file name casing in imports. */
+
+    /* Strict type-checking options */
+    "strict": true,                                  /* Enable all strict type-checking options. */
+    "noImplicitAny": true,                           /* Report errors on variables with an implied 'any' type. */
+    "strictNullChecks": true,                        /* Ensure null and undefined are handled explicitly. */
+    "strictBindCallApply": true,                     /* Enforce correct function bindings. */
+    "noImplicitThis": true,                          /* Report errors when 'this' is implicitly typed as 'any'. */
+
+    /* Module resolution settings */
+    "moduleResolution": "node",                    /* Use Node.js module resolution strategy. */
+    "resolveJsonModule": true,                       /* Allow importing JSON files. */
+    "typeRoots": ["./node_modules/@types"],        /* Specify locations to look for type definitions. */
+
+    /* Emit options */
+    "removeComments": true,                          /* Remove comments from emitted JavaScript. */
+    "skipLibCheck": true                             /* Skip type-checking of library definition files for faster builds. */
+  }
+}
