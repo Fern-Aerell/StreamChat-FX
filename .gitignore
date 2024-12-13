@@ -1,0 +1,7 @@
+tsconfig.tsbuildinfo
+package-lock.json
+node_modules
+dist
+src/savedata.json
+setup_environment.exe
+go.sum
