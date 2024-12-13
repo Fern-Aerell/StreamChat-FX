@@ -1,0 +1,13 @@
+{
+  "name": "leva-yt-live-chat-service",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Fern-Aerell",
+  "license": "Proprietary",
+  "description": "A live chat service for YouTube live chat streams using Playwright, Socket.IO, and TypeScript.",
+  "dependencies": {
+    "@inquirer/input": "^4.1.0",
+    "playwright": "^1.49.1",
+    "socket.io": "^4.8.1"
+  }
+}
