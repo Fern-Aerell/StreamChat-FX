@@ -1,6 +1,6 @@
 class LevaYTLiveChatClient {
-    constructor(hostname, port) {
-        this.hostname = hostname;
+    constructor(port) {
+        this.hostname = 'localhost';
         this.port = port;
         this.io = null;
     }
