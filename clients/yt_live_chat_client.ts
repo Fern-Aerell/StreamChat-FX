@@ -10,7 +10,7 @@ export interface Chat {
     message: string;
 }
 
-export class LevaYTLiveChatClient {
+export class YTLiveChatClient {
     private hostname: string;
     private port: number;
     private io: Socket | null;

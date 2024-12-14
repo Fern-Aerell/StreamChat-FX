@@ -15,7 +15,7 @@ interface SaveDataType {
 }
 
 (async () => {
-    console.info('Leva YT Live Chat Service\n');
+    console.info('YT Live Chat Service\n');
 
     // Load saved configuration data if available
     const savedData = loadJsonData('savedata') as SaveDataType | null;

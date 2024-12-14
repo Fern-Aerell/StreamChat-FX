@@ -1,4 +1,4 @@
-class LevaYTLiveChatClient {
+class YTLiveChatClient {
     constructor(port) {
         this.hostname = 'localhost';
         this.port = port;
