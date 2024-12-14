@@ -15,7 +15,8 @@ esbuild.build({
         { from: 'service.cmd', to: 'service.cmd' },
         { from: 'package.build.json', to: 'package.json' },
         { from: 'setup_environment.exe', to: 'setup_environment.exe' },
-        { from: ['./live_chat/**/*'], to: 'live_chat' },
+        { from: ['./clients/**/*'], to: 'clients' },
+        { from: ['./examples/index.html'], to: 'examples/index.html' },
       ]
     })
   ]

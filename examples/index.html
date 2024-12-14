@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <script>
+        const PORT = 49152;
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Chat Default</title>
@@ -30,11 +33,10 @@
         class="w-full max-w-xl p-4 bg-transparent space-y-4 overflow-y-auto h-96 overflow-y-hidden">
         <!-- Chat will appear here -->
     </div>
-    <script type="module">
-        import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
-
-        const port = 49152;
-        const socket = io(`http://localhost:${port}`);
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+    <script src="../clients/leva_yt_live_chat_client.js"></script>
+    <script>
+        const client = new LevaYTLiveChatClient('localhost', PORT);
         const chatContainer = document.getElementById('chat_container');
 
         let chatHistory = [];
@@ -67,9 +69,12 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         };
 
-        socket.on('latest-chat', (data) => {
+        const callback = (data) => {
             addChat(data.name, data.message);
-        });
+        };
+
+        client.connect();
+        client.listen(callback);
     </script>
 </body>
 
