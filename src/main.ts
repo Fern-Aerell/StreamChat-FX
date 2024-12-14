@@ -10,6 +10,7 @@ interface SaveDataType {
     browserPath: string;
     delay: string;
     port: string;
+    headless: string;
     link: string;
 }
 
@@ -18,20 +19,6 @@ interface SaveDataType {
 
     // Load saved configuration data if available
     const savedData = loadJsonData('savedata') as SaveDataType | null;
-
-    // Get YouTube live chat link from user
-    let link: string;
-
-    try {
-        link = await input({
-            message: 'Enter the YouTube live chat link:',
-            required: true,
-            default: savedData?.link,
-            validate: validateYoutubeLiveChatLink
-        });
-    } catch (error) {
-        return;
-    }
 
     // Get browser executable path from user
     let browserPath: string;
@@ -68,7 +55,7 @@ interface SaveDataType {
     }
 
     // Get port from user and validate input
-    let port: string | number 
+    let port: string | number
 
     try {
         port = await input({
@@ -95,8 +82,56 @@ interface SaveDataType {
     // If "random" is selected, get an available port
     port = port === 'random' ? await getAvailablePort() : parseInt(port);
 
+    // Get the Headless value
+    let headless: string | boolean;
+
+    try {
+        /**
+         * Prompt the user to input the headless value.
+         * - The input must be either "true" or "false".
+         * - If no input is provided, the default value is taken from `savedData.headless` or set to "true".
+         * - Validation ensures the input is valid ("true" or "false").
+         */
+        headless = await input({
+            message: 'Please enter a value for headless (true or false):', // Prompt message for the user
+            required: true, // The input is mandatory
+            default: savedData?.headless || 'true', // Use saved value or default to "true"
+            validate: (value) => {
+                /**
+                 * Validation function:
+                 * - Ensures the input is either "true" or "false".
+                 * - Returns an error message if the input is invalid.
+                 */
+                if (value != 'true' && value != "false") {
+                    return 'The headless value must be either "true" or "false".'; // Error message shown to the user
+                }
+                return true; // Input is valid
+            }
+        });
+    } catch (error) {
+        // Exit gracefully if an error occurs (e.g., user cancels the input).
+        return;
+    }
+
+    // Convert the input string ("true" or "false") to a boolean value.
+    headless = headless == 'true' ? true : false;
+
+    // Get YouTube live chat link from user
+    let link: string;
+
+    try {
+        link = await input({
+            message: 'Enter the YouTube live chat link:',
+            required: true,
+            default: savedData?.link,
+            validate: validateYoutubeLiveChatLink
+        });
+    } catch (error) {
+        return;
+    }
+
     // Save configuration data
-    saveJsonData('savedata', { browserPath, delay: delay.toString(), port: port.toString(), link });
+    saveJsonData('savedata', { browserPath, delay: delay.toString(), port: port.toString(), link, headless: `${headless}` });
 
     // Initialize Socket.IO server
     const io = new Server(port, {
@@ -108,7 +143,7 @@ interface SaveDataType {
     console.info(`\nService running on port: ${port}`);
 
     // Launch Playwright browser
-    const browser = await chromium.launch({ headless: true, executablePath: browserPath });
+    const browser = await chromium.launch({ headless: headless, executablePath: browserPath });
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto(link, { waitUntil: 'domcontentloaded' });
