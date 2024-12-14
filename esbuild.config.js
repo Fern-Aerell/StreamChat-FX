@@ -5,7 +5,7 @@ esbuild.build({
   entryPoints: ['src/**/*.ts'],
   minify: true,
   platform: 'node',
-  outdir: 'dist/service',
+  outdir: 'dist',
   format: 'cjs',
   plugins: [
     esbuildCopy.copy({

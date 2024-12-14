@@ -3,7 +3,7 @@
   "include": ["src/**/*.ts"],
   "compilerOptions": {
     /* Specify paths and structure */
-    "outDir": "dist/service",                               /* Specify the output directory for compiled files. */
+    "outDir": "dist",                               /* Specify the output directory for compiled files. */
     "rootDir": "src",                               /* Specify the root directory of source files. */
 
     /* Language and environment settings */

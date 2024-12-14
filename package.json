@@ -1,7 +1,7 @@
 {
   "name": "leva-yt-live-chat-service",
   "version": "1.0.0",
-  "main": "dist/service/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "run": "node .",
     "dev": "npx ts-node src/main.ts",
