@@ -1,23 +1,23 @@
 ## Changelog
 
-### Versi 1.0.0 - 14 Desember 2024
+### Version 1.0.0 - December 14, 2024
 
-- **Perubahan:**
-  - Merubah **license** untuk memperjelas ketentuan penggunaan.
-  - Menghapus kata **"leva"** pada setiap aspek dari proyek.
-  - Merubah parameter **constructor client** menjadi hanya memasukkan **port** saja.
+- **Changes:**
+  - Updated the **license** to clarify usage terms.
+  - Removed the word **"leva"** from all aspects of the project.
+  - Changed the **client constructor** parameter to only accept the **port**.
 
-- **Pembaruan:**
-  - Menambahkan kode agar pengguna dapat mengatur **headless mode** menjadi `true` atau `false` sesuai kebutuhan.
-  - Memperbaiki kesalahan kode pada file **examples/index.html**.
-  - Mengubah folder lokasi build dari `dist/service` menjadi `dist`.
-  - Menambahkan kode JavaScript dan TypeScript yang mempermudah penggunaan **service** oleh client.
+- **Updates:**
+  - Added code to allow users to set **headless mode** to `true` or `false` as needed.
+  - Fixed code issues in the **examples/index.html** file.
+  - Changed the build folder location from `dist/service` to `dist`.
+  - Added JavaScript and TypeScript code to simplify **service** usage for clients.
   
-- **Penambahan:**
-  - Menambahkan file `.gitignore` untuk mengecualikan file dan folder tertentu dari version control.
-  - Menambahkan file yang dibutuhkan di hasil build untuk kemudahan penggunaan.
-  - Menambahkan kode untuk setup environment service agar dapat berjalan secara **standalone**.
-  - Menambahkan **README.md** dengan dokumentasi lengkap mengenai cara penggunaan dan instalasi.
+- **Additions:**
+  - Added a `.gitignore` file to exclude certain files and folders from version control.
+  - Added necessary files to the build output for ease of use.
+  - Added code to set up the service environment for **standalone** operation.
+  - Added a **README.md** file with complete documentation on usage and installation.
 
-- **Fix:**
-  - Memperbaiki beberapa bug kecil untuk meningkatkan kestabilan dan pengalaman pengguna.
+- **Fixes:**
+  - Fixed several minor bugs to improve stability and user experience.
