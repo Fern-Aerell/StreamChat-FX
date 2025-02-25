@@ -45,11 +45,11 @@ class Config:
 
             if browser_path_length == 0 and len(self.browser_path) == 0:
                 self.browser_path: str = ''
-                print_error('Lokasi file executable browser tidak boleh kosong.')
+                print_error('Browser tidak boleh kosong.')
                 continue
 
             if browser_path_length != 0:
-                print_info(f'Mengatur lokasi file executable browser menjadi {browser_path}.')
+                print_info(f'Mengatur Browser menjadi {browser_path}.')
                 self.browser_path: str = browser_path
             else:
                 self.browser_path: str = self.browser_path
@@ -60,7 +60,7 @@ class Config:
                     await browser.close()
             except Exception:
                 self.browser_path: str = ''
-                print_error('File executable browser tidak valid.')
+                print_error('Browser tidak valid.')
                 continue
 
             break
