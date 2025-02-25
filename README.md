@@ -1,3 +1,3 @@
-# YT Live Chat Service
+# YT Chat Stream
 
-Proyek ini sedang membuat ulang kode dari typescript/javascript ke python.
+Proyek ini sedang dibuat ulang dengan bahasa pemrograman python.
