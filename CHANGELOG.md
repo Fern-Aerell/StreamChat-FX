@@ -3,6 +3,7 @@
 ### Versi 2.0.0 - Tidak di ketahui.
 
 - **Perubahan Besar:**
+    - Mengganti nama proyek menjadi YT Chat Stream.
     - Membuat ulang proyek dengan bahasa python.
 
 ### Versi 1.0.0 - 14 Desember 2024
