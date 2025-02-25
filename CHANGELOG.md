@@ -1,23 +1,28 @@
-## Changelog
+## CHANGELOG 
 
-### Version 1.0.0 - December 14, 2024
+### Versi 2.0.0 - Tidak di ketahui.
 
-- **Changes:**
-  - Updated the **license** to clarify usage terms.
-  - Removed the word **"leva"** from all aspects of the project.
-  - Changed the **client constructor** parameter to only accept the **port**.
+- **Perubahan Besar:**
+    - Membuat ulang proyek dengan bahasa python.
 
-- **Updates:**
-  - Added code to allow users to set **headless mode** to `true` or `false` as needed.
-  - Fixed code issues in the **examples/index.html** file.
-  - Changed the build folder location from `dist/service` to `dist`.
-  - Added JavaScript and TypeScript code to simplify **service** usage for clients.
-  
-- **Additions:**
-  - Added a `.gitignore` file to exclude certain files and folders from version control.
-  - Added necessary files to the build output for ease of use.
-  - Added code to set up the service environment for **standalone** operation.
-  - Added a **README.md** file with complete documentation on usage and installation.
+### Versi 1.0.0 - 14 Desember 2024
 
-- **Fixes:**
-  - Fixed several minor bugs to improve stability and user experience.
+- **Perubahan:**  
+  - Memperbarui **lisensi** untuk memperjelas ketentuan penggunaan.  
+  - Menghapus kata **"leva"** dari seluruh aspek proyek.  
+  - Mengubah parameter **konstruktor klien** agar hanya menerima **port**.  
+
+- **Pembaruan:**  
+  - Menambahkan kode agar pengguna dapat mengatur **mode headless** ke `true` atau `false` sesuai kebutuhan.  
+  - Memperbaiki masalah kode di file **examples/index.html**.  
+  - Mengubah lokasi folder build dari `dist/service` menjadi `dist`.  
+  - Menambahkan kode JavaScript dan TypeScript untuk menyederhanakan penggunaan **service** oleh klien.  
+
+- **Penambahan:**  
+  - Menambahkan file `.gitignore` untuk mengecualikan file dan folder tertentu dari versi kontrol.  
+  - Menambahkan file yang diperlukan ke hasil build agar lebih mudah digunakan.  
+  - Menambahkan kode untuk mengatur lingkungan service agar dapat berjalan secara **standalone**.  
+  - Menambahkan file **README.md** dengan dokumentasi lengkap tentang penggunaan dan instalasi.  
+
+- **Perbaikan:**  
+  - Memperbaiki beberapa bug kecil untuk meningkatkan stabilitas dan pengalaman pengguna.
