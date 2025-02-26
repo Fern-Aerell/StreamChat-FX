@@ -1,6 +1,6 @@
 rm build -rf
 python -m nuitka\
-    --file-description="Alat untuk mengalirkan data live chat dari YouTube."\
+    --file-description="A tool to get live stream chat data from YouTube."\
     --windows-icon-from-ico="assets/icon/icon.ico"\
     --output-filename="yt_chat_stream.exe"\
     --report="build/nuitka-report.xml"\
