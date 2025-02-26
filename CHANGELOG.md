@@ -1,29 +1,27 @@
 ## CHANGELOG 
 
-### Versi 2.0.0 - Tidak di ketahui.
+### 2.0.0 - Unknown.
 
-- **Perubahan Besar:**
-    - Mengganti nama proyek menjadi YT Chat Stream.
-    - Membuat ulang proyek dengan bahasa python.
+- **Major Updates:**
+    - Rename the project to YT Chat Stream.
+    - Rewrite the project in Python.
 
-### Versi 1.0.0 - 14 Desember 2024
+### 1.0.0 - 14 December 2024
 
-- **Perubahan:**  
-  - Memperbarui **lisensi** untuk memperjelas ketentuan penggunaan.  
-  - Menghapus kata **"leva"** dari seluruh aspek proyek.  
-  - Mengubah parameter **konstruktor klien** agar hanya menerima **port**.  
+- **Changes:**  
+    - Upgrade the **license** to clarify terms and conditions for the user.
+    - Remove all instances of the word **"leva"** from the project.
+    - Change the **Client Constructor** parameter to receive only the **port**.
 
-- **Pembaruan:**  
-  - Menambahkan kode agar pengguna dapat mengatur **mode headless** ke `true` atau `false` sesuai kebutuhan.  
-  - Memperbaiki masalah kode di file **examples/index.html**.  
-  - Mengubah lokasi folder build dari `dist/service` menjadi `dist`.  
-  - Menambahkan kode JavaScript dan TypeScript untuk menyederhanakan penggunaan **service** oleh klien.  
-
-- **Penambahan:**  
-  - Menambahkan file `.gitignore` untuk mengecualikan file dan folder tertentu dari versi kontrol.  
-  - Menambahkan file yang diperlukan ke hasil build agar lebih mudah digunakan.  
-  - Menambahkan kode untuk mengatur lingkungan service agar dapat berjalan secara **standalone**.  
-  - Menambahkan file **README.md** dengan dokumentasi lengkap tentang penggunaan dan instalasi.  
-
-- **Perbaikan:**  
-  - Memperbaiki beberapa bug kecil untuk meningkatkan stabilitas dan pengalaman pengguna.
+- **Updates:**  
+    - Now users can set **headless mode** to `true` or `false` according to their needs.
+    - Fix code issues in the file **examples/index.html**.
+    - Relocate the build folder to `dist`.
+    - Add JavaScript and TypeScript code to simplify the *service* used by the client.
+    - Add a `.gitignore` file to exclude specific files and folders from Git version control.
+    - Add the required file to the build result so it is easier to use.
+    - Add code to configure the service environment so it runs as a **standalone** service.
+    - Add a **README.md** file with complete documentation on usage and installation.
+    
+- **Fix Bug:**
+    - Fix a few small bugs to improve stability and user experience.
