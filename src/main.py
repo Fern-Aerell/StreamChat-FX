@@ -1,10 +1,13 @@
+from eventlet import monkey_patch
+monkey_patch()
+
 from print import print_error, print_info
+from service import Service
 from config import Config
-import asyncio
 import os
 
 cfgFilePath: str = 'config.json'
-cfg: Config = Config()
+service: Service = Service(Config())
 
 if __name__ == '__main__':
     try:
@@ -15,17 +18,17 @@ if __name__ == '__main__':
         print('Cek apakah ada data yang tersimpan.')
         if os.path.exists(cfgFilePath):
             print('Memuat data yang tersimpan.\n')
-            cfg.from_json_file(cfgFilePath)
+            service.config.from_json_file(cfgFilePath)
         else:
             print('Tidak ada data yang tersimpan.\n')
 
         print_info('Info: Kosongkan input jika ingin menggunakan data yang tersimpan sebelumnya.\n')
 
-        asyncio.run(cfg.input())
-
-        print('Program Selesai.')
-    except Exception as error:
+        service.config.input()
+        service.run()
+    except BaseException as error:
         for arg in error.args:
             print_error(arg)
     finally:
-        cfg.to_json_file(cfgFilePath)
+        service.stop()
+        service.config.to_json_file(cfgFilePath)
