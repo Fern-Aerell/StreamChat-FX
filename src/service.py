@@ -46,7 +46,7 @@ class Service:
     def __run_browser(self, callback):
         try:
             with sync_playwright() as pw:
-                self.__browser = pw.chromium.launch(executable_path=self.__config.browser_path, headless=True)
+                self.__browser = pw.chromium.launch(executable_path=self.__config.browser_path, headless=False)
                 self.__browser_context = self.__browser.new_context()
                 self.__page = self.__browser_context.new_page()
                 self.__page.goto(self.__config.link, wait_until='domcontentloaded')
