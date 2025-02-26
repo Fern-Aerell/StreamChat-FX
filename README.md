@@ -1,3 +1,3 @@
 # YT Chat Stream
 
-Proyek ini sedang dibuat ulang dengan bahasa pemrograman python.
+This project is being rewritten in Python.
