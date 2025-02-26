@@ -1,5 +1,5 @@
 from print import print_error, print_info
-from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
 from dataclasses import dataclass, asdict
 import urllib
 import json
@@ -38,13 +38,12 @@ class Config:
         with open(path, 'w', encoding='utf-8') as file:
             json.dump(self.to_json(), file, ensure_ascii=False, indent=4)
 
-    async def input(self):
+    def input(self):
         while True:
             browser_path: str = input(f'Browser {self.browser_path}: ')
             browser_path_length: int = len(browser_path)
 
             if browser_path_length == 0 and len(self.browser_path) == 0:
-                self.browser_path: str = ''
                 print_error('Browser tidak boleh kosong.')
                 continue
 
@@ -55,12 +54,14 @@ class Config:
                 self.browser_path: str = self.browser_path
 
             try:
-                async with async_playwright() as pw:
-                    browser = await pw.chromium.launch(executable_path=self.browser_path)
-                    await browser.close()
+                print_info('Mengecek browser...')
+                with sync_playwright() as pw:
+                    browser = pw.chromium.launch(executable_path=self.browser_path)
+                    browser.close()
+                print_info('Browser bisa digunakan.')
             except Exception:
                 self.browser_path: str = ''
-                print_error('Browser tidak valid.')
+                print_error('Browser tidak valid, lokasi browser mungkin salah atau browser bukan base dari chromium.')
                 continue
 
             break
@@ -124,9 +125,24 @@ class Config:
             link_query_params = urllib.parse.parse_qs(self.link.query)
             if 'v' not in link_query_params or not link_query_params['v']:
                 self.link = ''
-                print_error('Link youtube live char tidak memiliki video id.')
+                print_error('Link youtube live chat tidak memiliki video id.')
                 continue
 
             self.link: str = urllib.parse.urlunparse(self.link)
+
+            try:
+                print_info('Mengecek link...')
+                with sync_playwright() as pw:
+                    browser = pw.chromium.launch(executable_path=self.browser_path)
+                    browser_context = browser.new_context()
+                    page = browser_context.new_page()
+                    page.goto(self.link, wait_until='domcontentloaded')
+                    page.wait_for_selector('yt-live-chat-text-message-renderer', state='attached')
+                    browser.close()
+                print_info('Link dapat digunakan.')
+            except Exception:
+                self.link: str = ''
+                print_error('Link youtube live chat tidak ada atau live sudah berakhir.')
+                continue
 
             break
