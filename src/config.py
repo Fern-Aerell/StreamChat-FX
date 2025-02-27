@@ -8,16 +8,16 @@ import os
 @dataclass
 class Config:
     browser_path: str = ''
-    delay: int = 50
-    port: int = 8080
-    link: str = ''
+    delay: int = 500
+    port: int = 49152
+    url: str = ''
 
     def from_json(self, data: dict):
         for key, default, type in [
             ('browser_path', '', str),
-            ('delay', 50, int),
-            ('port', 8080, int),
-            ('link', '', str),
+            ('delay', 500, int),
+            ('port', 49152, int),
+            ('url', '', str),
         ]:
             setattr(self, key, data.get(key, default) if isinstance(data.get(key), type) else default)
 
@@ -73,16 +73,16 @@ class Config:
                 self.delay: str = delay
 
                 if not self.delay.isdigit():
-                    self.delay = 50
+                    self.delay = 500
                     print_error('Delay must be an integer.')
                     continue
                 
                 print_info(f'Set delay to {delay}.')
                 self.delay: int = int(self.delay)
 
-            if self.delay < 50:
-                self.delay = 50
-                print_error('Delay should not be under 50 milliseconds.')
+            if self.delay < 500:
+                self.delay = 500
+                print_error('Delay should not be under 500 milliseconds.')
                 continue
 
             break
@@ -94,7 +94,7 @@ class Config:
                 self.port: str = port
 
                 if not self.port.isdigit():
-                    self.port = 8080
+                    self.port = 49152
                     print_error('Port must be an integer.')
                     continue
 
@@ -104,44 +104,49 @@ class Config:
             break
 
         while True:
-            link: str = input(f'Link {self.link}: ')
+            url: str = input(f'URL {self.url}: ')
 
-            if len(link) == 0 and len(self.link) == 0:
-                self.link = ''
-                print_error('Link should not be empty.')
+            if len(url) == 0 and len(self.url) == 0:
+                self.url = ''
+                print_error('URL should not be empty.')
                 continue
 
-            if len(link) != 0:
-                print_info(f'Set link to {link}.')
-                self.link: str = link
+            if len(url) != 0:
+                print_info(f'Set URL to {url}.')
+                self.url: str = url
 
-            self.link: urllib.parse.ParseResult = urllib.parse.urlparse(self.link)
+            self.url: urllib.parse.ParseResult = urllib.parse.urlparse(self.url)
             
-            if self.link.hostname != 'www.youtube.com' or self.link.path != '/live_chat':
-                self.link = ''
+            if self.url.hostname != 'www.youtube.com':
+                self.url = ''
+                print_error('Currently only supports YouTube live chat URL.')
+                continue
+
+            if self.url.path != '/live_chat':
+                self.url = ''
                 print_error('Invalid YouTube live chat URL.')
                 continue
 
-            link_query_params = urllib.parse.parse_qs(self.link.query)
-            if 'v' not in link_query_params or not link_query_params['v']:
-                self.link = ''
+            url_query_params = urllib.parse.parse_qs(self.url.query)
+            if 'v' not in url_query_params or not url_query_params['v']:
+                self.url = ''
                 print_error('YouTube live chat URL does not a video ID.')
                 continue
 
-            self.link: str = urllib.parse.urlunparse(self.link)
+            self.url: str = urllib.parse.urlunparse(self.url)
 
             try:
-                print_info('Link verification...')
+                print_info('URL verification...')
                 with sync_playwright() as pw:
                     browser = pw.chromium.launch(executable_path=self.browser_path)
                     browser_context = browser.new_context()
                     page = browser_context.new_page()
-                    page.goto(self.link, wait_until='domcontentloaded')
+                    page.goto(self.url, wait_until='domcontentloaded')
                     page.wait_for_selector('yt-live-chat-text-message-renderer', state='attached')
                     browser.close()
-                print_info('Link can be used.')
+                print_info('URL can be used.')
             except Exception:
-                self.link: str = ''
+                self.url: str = ''
                 print_error('YouTube live chat URL is missing or the live stream is over.')
                 continue
 

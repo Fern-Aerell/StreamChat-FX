@@ -3,7 +3,7 @@
 ### 2.0.0 - Unknown.
 
 - **Major Updates:**
-    - Rename the project to YT Chat Stream.
+    - Rename the project to StreamChat FX.
     - Rewrite the project in Python.
 
 ### 1.0.0 - 14 December 2024

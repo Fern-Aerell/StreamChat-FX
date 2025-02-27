@@ -1,11 +1,13 @@
+from flask import Flask, request, send_from_directory, Response, abort
 from playwright.sync_api import sync_playwright, Browser, BrowserContext, Page
+from print import print_info, print_error
 from flask_socketio import SocketIO
 from dataclasses import dataclass
-from print import print_info, print_error
-from config import Config
-from flask import Flask, request
-from time import sleep
+from bs4 import BeautifulSoup
 from threading import Thread
+from config import Config
+from time import sleep
+import os
 
 @dataclass
 class Service:
@@ -25,19 +27,55 @@ class Service:
     def __init__(self, config: Config):
         self.__config = config
 
-        self.__app = Flask('YT Chat Stream')
+        # Flask
+        self.__app = Flask('StreamChat FX', static_folder='static')
         self.__app.config['SECRET_KEY'] = 'gZmPpFY0eMIWuU38LYmbXTx9LX0vzhoV/rwKlir8fdg='
 
+        @self.__app.get('/')
+        def __app():
+            return "StreamChat FX Is Running"
+        
+        @self.__app.route('/static/<path:filename>')
+        def __app_static(filename):
+            return send_from_directory(self.__app.static_folder, filename)
+        
+        @self.__app.route('/theme/<theme>')
+        def __app_theme(theme):
+            html_path = f'theme/{theme}/index.html'
+
+            if not os.path.exists(html_path):
+                abort(404)
+
+            with open(html_path, 'r', encoding='utf-8') as file:
+                soup = BeautifulSoup(file, 'html.parser')
+
+            placeholder = soup.find('streamchatfxclientscript')
+
+            if placeholder:
+                new_script = BeautifulSoup("""
+                    <script src="/static/js/socket.io.min.js"></script>
+                    <script>
+                        const socket = io(`${window.location.protocol}//${window.location.hostname}:${window.location.port}`);
+                        socket.on('latest-chat', StreamChatFXClientLatestChat);
+                    </script>
+                    """, 
+                    'html.parser'
+                )
+
+                placeholder.replace_with(new_script)
+
+            return Response(str(soup), content_type='text/html')
+
+        # Flask Socket IO
         self.__socket_io = SocketIO(self.__app, cors_allowed_origins='*', async_mode='eventlet')
 
-        self.__socket_io.on_event('connect', self.__handle_connect)
-        self.__socket_io.on_event('disconnect', self.__handle_disconnect)
+        @self.__socket_io.on('connect')
+        def __socket_io_handle_connect(self):
+            print_info(f'Client {request.sid} connected.')
 
-    def __handle_connect(self):
-        print_info(f'Client {request.sid} connected.')
-
-    def __handle_disconnect(self):
-        print_info(f'Client {request.sid} disconnected.')
+        @self.__socket_io.on('disconnect')
+        def __socket_io_handle_disconnect(self):
+            print_info(f'Client {request.sid} disconnected.')
 
     @property
     def config(self) -> Config:
@@ -49,7 +87,7 @@ class Service:
                 self.__browser = pw.chromium.launch(executable_path=self.__config.browser_path, headless=False)
                 self.__browser_context = self.__browser.new_context()
                 self.__page = self.__browser_context.new_page()
-                self.__page.goto(self.__config.link, wait_until='domcontentloaded')
+                self.__page.goto(self.__config.url, wait_until='domcontentloaded')
 
                 self.__page.wait_for_selector('yt-live-chat-text-message-renderer', state='attached')
 

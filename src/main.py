@@ -11,7 +11,7 @@ service: Service = Service(Config())
 
 if __name__ == '__main__':
     try:
-        print('YT Live Chat Service')
+        print('StreamChat FX')
         print('Version: 2.0.0')
         print('Create By: Fern Aerell.\n')
 
