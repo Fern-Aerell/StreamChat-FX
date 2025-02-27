@@ -1,23 +1,27 @@
-## Changelog
+## CHANGELOG 
 
-### Version 1.0.0 - December 14, 2024
+### 2.0.0 - Unknown.
 
-- **Changes:**
-  - Updated the **license** to clarify usage terms.
-  - Removed the word **"leva"** from all aspects of the project.
-  - Changed the **client constructor** parameter to only accept the **port**.
+- **Major Updates:**
+    - Rename the project to StreamChat FX.
+    - Rewrite the project in Python.
 
-- **Updates:**
-  - Added code to allow users to set **headless mode** to `true` or `false` as needed.
-  - Fixed code issues in the **examples/index.html** file.
-  - Changed the build folder location from `dist/service` to `dist`.
-  - Added JavaScript and TypeScript code to simplify **service** usage for clients.
-  
-- **Additions:**
-  - Added a `.gitignore` file to exclude certain files and folders from version control.
-  - Added necessary files to the build output for ease of use.
-  - Added code to set up the service environment for **standalone** operation.
-  - Added a **README.md** file with complete documentation on usage and installation.
+### 1.0.0 - 14 December 2024
 
-- **Fixes:**
-  - Fixed several minor bugs to improve stability and user experience.
+- **Changes:**  
+    - Upgrade the **license** to clarify terms and conditions for the user.
+    - Remove all instances of the word **"leva"** from the project.
+    - Change the **Client Constructor** parameter to receive only the **port**.
+
+- **Updates:**  
+    - Now users can set **headless mode** to `true` or `false` according to their needs.
+    - Fix code issues in the file **examples/index.html**.
+    - Relocate the build folder to `dist`.
+    - Add JavaScript and TypeScript code to simplify the *service* used by the client.
+    - Add a `.gitignore` file to exclude specific files and folders from Git version control.
+    - Add the required file to the build result so it is easier to use.
+    - Add code to configure the service environment so it runs as a **standalone** service.
+    - Add a **README.md** file with complete documentation on usage and installation.
+    
+- **Fix Bug:**
+    - Fix a few small bugs to improve stability and user experience.

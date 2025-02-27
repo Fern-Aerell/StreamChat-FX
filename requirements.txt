@@ -1,0 +1,6 @@
+beautifulsoup4==4.13.3
+Flask-SocketIO==5.5.1
+playwright==1.50.0
+eventlet==0.39.0
+Nuitka==2.6.6
+Flask==3.1.0

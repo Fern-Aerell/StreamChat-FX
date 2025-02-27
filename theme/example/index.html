@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <script>
-        const PORT = 49152;
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Chat Default</title>
+    <title>Theme Example</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Animasi masuk chat */
         @keyframes fadeIn {
             0% {
                 opacity: 0;
@@ -27,23 +22,16 @@
         }
     </style>
 </head>
-
-<body class="bg-transparent">
-    <div id="chat_container"
-        class="w-full max-w-xl p-4 bg-transparent space-y-4 overflow-y-auto h-96 overflow-y-hidden">
-        <!-- Chat will appear here -->
-    </div>
-    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
-    <script src="../clients/yt_live_chat_client.js"></script>
+<body>
+    <div id="chat_container" class="w-full max-w-xl p-4 bg-transparent space-y-4 overflow-y-auto h-96 overflow-y-hidden"></div>
     <script>
-        const client = new YTLiveChatClient(PORT);
         const chatContainer = document.getElementById('chat_container');
 
         let chatHistory = [];
 
-        const addChat = (name, message) => {
+        function StreamChatFXClientLatestChat(data) {
             // Add new chat to the history
-            chatHistory.push({ name, message });
+            chatHistory.push({ name: data.name, message: data.message });
 
             // Keep only the latest 10 chats
             if (chatHistory.length > 10) {
@@ -67,15 +55,8 @@
 
             // Scroll to the bottom
             chatContainer.scrollTop = chatContainer.scrollHeight;
-        };
-
-        const callback = (data) => {
-            addChat(data.name, data.message);
-        };
-
-        client.connect();
-        client.listen(callback);
+        }
     </script>
+    <StreamChatFXClientScript/>
 </body>
-
 </html>
