@@ -25,10 +25,10 @@ if __name__ == '__main__':
         print_info('Info: Empty the input if you want to use previously saved data.\n')
 
         service.config.input()
+        service.config.to_json_file(cfgFilePath)
         service.run()
     except BaseException as error:
         for arg in error.args:
             print_error(arg)
     finally:
         service.stop()
-        service.config.to_json_file(cfgFilePath)
