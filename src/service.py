@@ -115,8 +115,8 @@ class Service:
         self.__isRunning = True
 
         def info():
-            print_info(f'Service berjalan pada {self.__host}:{self.__config.port}.')
-            print_info('Ctrl + C untuk mengentikan service.')
+            print_info(f'The service is running on {self.__host}:{self.__config.port}.')
+            print_info('Press Ctrl + C to stop the service.')
         
         socket_io_thread = Thread(target=self.__run_socket_io, daemon=True)
         socket_io_thread.start()
@@ -139,4 +139,4 @@ class Service:
         except:
             pass
 
-        print_info('Service berhenti.')
+        print_info('The service has stopped.')

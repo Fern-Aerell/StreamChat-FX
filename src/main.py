@@ -12,17 +12,17 @@ service: Service = Service(Config())
 if __name__ == '__main__':
     try:
         print('YT Live Chat Service')
-        print('Versi 2.0.0')
-        print('Dibuat oleh Fern Aerell.\n')
+        print('Version: 2.0.0')
+        print('Create By: Fern Aerell.\n')
 
-        print('Cek apakah ada data yang tersimpan.')
+        print('Check whether saved data exists.')
         if os.path.exists(cfgFilePath):
-            print('Memuat data yang tersimpan.\n')
+            print('Load saved data.\n')
             service.config.from_json_file(cfgFilePath)
         else:
-            print('Tidak ada data yang tersimpan.\n')
+            print('Saved data does not exist.\n')
 
-        print_info('Info: Kosongkan input jika ingin menggunakan data yang tersimpan sebelumnya.\n')
+        print_info('Info: Empty the input if you want to use previously saved data.\n')
 
         service.config.input()
         service.run()
