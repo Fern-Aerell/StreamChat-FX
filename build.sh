@@ -12,3 +12,5 @@ python -m nuitka\
     --lto=yes\
     src/main.py
 cp config.example.json build/main.dist/config.json
+cp static build/main.dist/static
+cp theme build/main.dist/theme
