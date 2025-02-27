@@ -1,6 +1,6 @@
 ## CHANGELOG 
 
-### 2.0.0 - Unknown.
+### 2.0.0 - 28 February 2025.
 
 - **Major Updates:**
     - Rename the project to StreamChat FX.
