@@ -1,12 +1,12 @@
 ## CHANGELOG 
 
-### 2.0.0 - 28 February 2025.
+### Version 2.0.0 - 28 February 2025.
 
 - **Major Updates:**
     - Rename the project to StreamChat FX.
     - Rewrite the project in Python.
 
-### 1.0.0 - 14 December 2024
+### Version 1.0.0 - 14 December 2024
 
 - **Changes:**  
     - Upgrade the **license** to clarify terms and conditions for the user.
