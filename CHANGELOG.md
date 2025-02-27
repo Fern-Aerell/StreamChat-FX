@@ -1,6 +1,11 @@
 ## CHANGELOG 
 
-### Version 2.0.0 - 28 February 2025.
+### Version 2.0.1 - Unknown
+
+- **Fix Bug:**
+    - Fix bad icon.
+
+### Version 2.0.0 - 28 February 2025
 
 - **Major Updates:**
     - Rename the project to StreamChat FX.

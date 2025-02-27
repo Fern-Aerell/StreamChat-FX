@@ -1,16 +1,20 @@
+VERSION="2.0.1"
+rm -rf "build/StreamChat FX-$VERSION-Windows-x64"
 python -m nuitka\
     --file-description="Custom Themes & Effects for Live Stream Chats"\
+    --include-data-files="config.example.json=config.json"\
     --windows-icon-from-ico="assets/icon/icon.ico"\
     --output-filename="streamchatfx.exe"\
-    --report="build/nuitka-report.xml"\
+    --include-data-dir="static=static"\
+    --include-data-dir="theme=theme"\
     --product-name="StreamChat FX"\
-    --product-version="2.0.0"\
-    --file-version="2.0.0"\
+    --product-version="$VERSION"\
+    --file-version="$VERSION"\
     --output-dir="build"\
+    --remove-output\
     --show-progress\
     --standalone\
+    --deployment\
     --lto=yes\
     src/main.py
-cp config.example.json build/main.dist/config.json
-cp -r static build/main.dist/static
-cp -r theme build/main.dist/theme
+mv build/main.dist "build/StreamChat FX-$VERSION-Windows-x64"
