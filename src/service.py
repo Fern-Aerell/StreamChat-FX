@@ -153,7 +153,7 @@ class Service:
         self.__isRunning = True
 
         def info():
-            print_info(f'The service is running on {self.__host}:{self.__config.port}.')
+            print_info(f'The service is running on http://{self.__host}:{self.__config.port}.')
             print_info('Press Ctrl + C to stop the service.')
         
         socket_io_thread = Thread(target=self.__run_socket_io, daemon=True)

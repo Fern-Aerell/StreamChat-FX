@@ -1,6 +1,6 @@
 ## CHANGELOG 
 
-### Version 2.0.3 - Unknown
+### Version 2.0.4 - Unknown
 
 - **New:**
     - Wave flow theme.
@@ -8,6 +8,7 @@
 
 - **Fix Bug:**
     - Fix bad icon.
+    - Fixing the service URL that appears in the terminal but cannot be clicked while the service is running.
 
 ### Version 2.0.0 - 28 February 2025
 
