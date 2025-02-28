@@ -1,4 +1,4 @@
-VERSION="2.0.1"
+VERSION="2.0.2"
 rm -rf "build/StreamChat FX-$VERSION-Windows-x64"
 python -m nuitka\
     --file-description="Custom Themes & Effects for Live Stream Chats"\

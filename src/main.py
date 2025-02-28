@@ -12,7 +12,7 @@ service: Service = Service(Config())
 if __name__ == '__main__':
     try:
         print('StreamChat FX')
-        print('Version: 2.0.1')
+        print('Version: 2.0.2')
         print('Create By: Fern Aerell.\n')
 
         print('Check whether saved data exists.')

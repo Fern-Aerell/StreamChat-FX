@@ -1,6 +1,9 @@
 ## CHANGELOG 
 
-### Version 2.0.1 - Unknown
+### Version 2.0.2 - Unknown
+
+- **New Theme:**
+    - Wave flow theme.
 
 - **Fix Bug:**
     - Fix bad icon.
