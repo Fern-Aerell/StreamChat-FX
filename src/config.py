@@ -61,7 +61,7 @@ class Config:
                 print_info('Browser can be used.')
             except Exception:
                 self.browser_path: str = ''
-                print_error('Invalid browser. The browser path may be wrong or the browser may not be Chromium-based.')
+                print_error('Invalid browser. The browser path may be wrong or the browser may not be Chromium-based.\nSometimes, restarting the program can fix this.')
                 continue
 
             break
