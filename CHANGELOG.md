@@ -1,10 +1,12 @@
 ## CHANGELOG 
 
-### Version 2.0.4 - Unknown
+### Version 2.0.5 - Unknown
 
 - **New:**
     - Wave flow theme.
     - New message invalid browser.
+    - Adding a route to retrieve files from a theme.
+    - Making the Example and Wave Flow themes' code even simpler.
 
 - **Fix Bug:**
     - Fix bad icon.

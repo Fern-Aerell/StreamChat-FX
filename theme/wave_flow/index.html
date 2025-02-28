@@ -24,6 +24,7 @@
             box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.19);
             -webkit-box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.19);
             -moz-box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.19);
+            border: 1px black solid;
         }
     </style>
 </head>
@@ -157,21 +158,18 @@
 
             // Create the container element for the chat message
             const containerElement = document.createElement("div");
-            const chatId = `chat-${Date.now()}-${Math.floor(Math.random() * 1000)}`; // Create unique ID
             const containerElementMaxWidth = 300; // Maximum width for the chat container
 
             containerElement.style.top = `${randomYValue}px`;
             containerElement.style.maxWidth = `${containerElementMaxWidth}px`;
             containerElement.style.transform = `translateX(-${containerElementMaxWidth}px)`; // Start off-screen
-            containerElement.id = chatId;
             containerElement.classList.add('chat-container');
 
-            // Create the text span inside the container
-            const textElement = document.createElement("span");
-            textElement.innerHTML = message;
-            containerElement.appendChild(textElement);
+            // Create html inside the container
+            containerElement.innerHTML += data.message;
 
-            document.body.appendChild(containerElement); // Add to document body
+            // Add containerElement to document body
+            document.body.appendChild(containerElement);
 
             // Force layout recalculation to avoid stuttering on first frame
             void containerElement.offsetWidth;

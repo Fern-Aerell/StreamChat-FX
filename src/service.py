@@ -39,9 +39,13 @@ class Service:
         def __app_static(filename):
             return send_from_directory(self.__app.static_folder, filename)
         
-        @self.__app.route('/theme/<theme>')
-        def __app_theme(theme):
-            html_path = f'theme/{theme}/index.html'
+        @self.__app.route('/theme/<themename>/<path:filename>')
+        def __app_theme_file(themename, filename):
+            return send_from_directory(f'theme/{themename}', filename)
+
+        @self.__app.route('/theme/<themename>')
+        def __app_theme(themename):
+            html_path = f'theme/{themename}/index.html'
 
             if not os.path.exists(html_path):
                 abort(404)
@@ -97,6 +101,11 @@ class Service:
 
                 while not self.__page.is_closed():
                     latest_chat = self.__page.evaluate_handle(
+                    # author-type:
+                    #   - default
+                    #   - owner
+                    #   - moderator
+                    #   - member
                     """
                         () => {
                             const chatItems = document.querySelectorAll('yt-live-chat-text-message-renderer');
@@ -105,7 +114,9 @@ class Service:
                             const latestItem = chatItems[chatItems.length - 1];
                             if (!latestItem) return null;
 
-                            const name = latestItem.querySelector('#author-name')?.textContent?.trim() || "";
+                            // 
+                            const type = latestItem.getAttribute('author-type') || 'default';
+                            const name = latestItem.querySelector('#author-name')?.textContent?.trim() || '';
                             const messageElement = latestItem.querySelector('#message');
 
                             if (!name || !messageElement) return null;
@@ -117,12 +128,12 @@ class Service:
                                 } else if (node.tagName === 'IMG' && node.classList.contains('emoji')) {
                                     const emojiSrc = node.getAttribute('src');
                                     if (emojiSrc) {
-                                        message += `<img src="${emojiSrc}" alt="emoji" class="emoji" style="width:24px; height:24px; vertical-align:middle;" />`;
+                                        message += `<img src="${emojiSrc}" alt="emoji" class="emoji" style="width:24px; height:24px;vertical-align:middle;padding-left:5px" />`;
                                     }
                                 }
                             });
 
-                            return message.trim() ? { type: 'default', name, message } : null;
+                            return message.trim() ? { type, name, message } : null;
                         }
                     """
                     ).json_value()

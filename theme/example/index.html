@@ -4,30 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Example Theme</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             background-color: transparent;
         }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .chat-bubble {
-            animation: fadeIn 0.5s ease-out;
-        }
     </style>
 </head>
 <body>
-    <div id="chat_container" class="w-full max-w-xl p-4 bg-transparent space-y-4 overflow-y-auto h-96 overflow-y-hidden"></div>
+    <div id="chat_container"></div>
     <script>
         const chatContainer = document.getElementById('chat_container');
 
@@ -46,14 +30,7 @@
             chatContainer.innerHTML = '';
             chatHistory.forEach((chat, index) => {
                 const chatDiv = document.createElement('div');
-                chatDiv.classList.add('bg-blue-50', 'p-3', 'rounded-lg', 'shadow-sm', 'text-sm', 'flex', 'flex-row', 'gap-1', 'flex-wrap', 'justify-start', 'items-center');
-                
-                // Apply animation only to the latest chat (index === chatHistory.length - 1)
-                if (index === chatHistory.length - 1) {
-                    chatDiv.classList.add('chat-bubble');
-                }
-
-                chatDiv.innerHTML = `<strong class="text-blue-600">${chat.name}:</strong> ${chat.message}`;
+                chatDiv.innerHTML = `<strong>${chat.name}:</strong> ${chat.message}`;
                 chatContainer.appendChild(chatDiv);
             });
 
