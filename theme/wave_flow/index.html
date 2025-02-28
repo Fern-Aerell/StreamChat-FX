@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Wave Theme</title>
+    <link href="https://fonts.cdnfonts.com/css/papernotes" rel="stylesheet">
+    <style>
+        body {
+            background-color: transparent;
+            overflow: hidden;
+            font-family: 'Papernotes', sans-serif;
+        }
+
+        .chat-container {
+            background-color: white;
+            color: black;
+            font-size: 20px;
+            position: absolute;
+            padding: 10px 16px;
+            border-radius: 16px;
+            will-change: transform;
+            box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.19);
+            -moz-box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.19);
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        // Chat animation system with pure JavaScript and smooth easing
+        let activeChatPositions = []; // Stores active chat Y positions
+        let chatQueue = []; // Queue for pending chat messages
+        let animationFrameId = null;
+
+        // 🔥 Configuration variables
+        const CHAT_DURATION = 15000; // Increased duration to 15s to slow down movement
+        const MIN_Y_MARGIN = 50; // Minimum vertical space between messages (px)
+        let SAFE_ZONE_TOP = window.innerHeight * 0.05; // Prevent messages from spawning too high (5% from top)
+        let SAFE_ZONE_BOTTOM = window.innerHeight * 0.85; // Prevent messages from spawning too low (85% from top)
+        let MAX_CONCURRENT_CHATS = Math.floor((SAFE_ZONE_BOTTOM - SAFE_ZONE_TOP) / MIN_Y_MARGIN); // Maximum messages visible at once
+
+        // Easing functions
+        const Easing = {
+            linear: function (t) {
+                return t;
+            },
+            // Easing in-out functions for natural movement
+            easeInOutCubic: function (t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            },
+            easeInOutQuad: function (t) {
+                return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+            },
+            // Slight acceleration then constant velocity (feels more natural for side-scrolling)
+            easeInOutSmoothStep: function (t) {
+                if (t < 0.2) {
+                    // Accelerate smoothly at the beginning (0-20%)
+                    return (t / 0.2) * (t / 0.2);
+                } else if (t > 0.8) {
+                    // Decelerate smoothly at the end (80-100%)
+                    const invT = (1 - t) / 0.2;
+                    return 1 - invT * invT;
+                } else {
+                    // Move at constant speed in the middle (20-80%)
+                    return 1;
+                }
+            }
+        };
+
+        // Track window size changes
+        window.addEventListener('resize', () => {
+            // Update safe zones on window resize
+            SAFE_ZONE_TOP = window.innerHeight * 0.05;
+            SAFE_ZONE_BOTTOM = window.innerHeight * 0.85;
+            MAX_CONCURRENT_CHATS = Math.floor((SAFE_ZONE_BOTTOM - SAFE_ZONE_TOP) / MIN_Y_MARGIN);
+        });
+
+        /**
+         * Generates a random Y position that does not overlap with existing chat messages.
+         * 
+         * @returns {number | null} A valid Y position or null if no space is available.
+         */
+        function getRandomY() {
+            // If we have reached the maximum number of concurrent chats, return null
+            if (activeChatPositions.length >= MAX_CONCURRENT_CHATS) {
+                return null;
+            }
+
+            // Create an array of available positions
+            const availableRange = SAFE_ZONE_BOTTOM - SAFE_ZONE_TOP;
+            const sectionHeight = availableRange / MAX_CONCURRENT_CHATS;
+            const positions = [];
+
+            // Calculate valid Y positions by dividing available space into sections
+            for (let i = 0; i < MAX_CONCURRENT_CHATS; i++) {
+                positions.push(SAFE_ZONE_TOP + (i * sectionHeight) +
+                    (Math.random() * sectionHeight * 0.7));
+            }
+
+            // Filter out positions that are too close to active ones
+            const validPositions = positions.filter(pos =>
+                !activeChatPositions.some(activePos => Math.abs(activePos - pos) < MIN_Y_MARGIN)
+            );
+
+            if (validPositions.length === 0) {
+                return null;
+            }
+
+            // Select a random position from the valid ones
+            const y = validPositions[Math.floor(Math.random() * validPositions.length)];
+            activeChatPositions.push(y);
+
+            // Remove the position from the active list after the animation duration
+            setTimeout(() => {
+                activeChatPositions = activeChatPositions.filter(pos => pos !== y);
+                processChatQueue(); // Check if queued messages can be shown
+            }, CHAT_DURATION);
+
+            return y;
+        }
+
+        /**
+         * Processes the chat queue and displays as many messages as possible
+         */
+        function processChatQueue() {
+            if (chatQueue.length === 0 || animationFrameId) return; // Stop if queue is empty or animation is in progress
+
+            animationFrameId = requestAnimationFrame(() => {
+                animationFrameId = null;
+
+                let availableSlots = MAX_CONCURRENT_CHATS - activeChatPositions.length;
+
+                while (availableSlots > 0 && chatQueue.length > 0) {
+                    const nextMessage = chatQueue.shift(); // Get the next message
+                    createElement(nextMessage); // Display the chat message
+                    availableSlots--;
+                }
+            });
+        }
+
+        /**
+         * Creates and animates a chat message using custom easing with requestAnimationFrame
+         * 
+         * @param {string} message - The chat message text
+         */
+        function createElement(message) {
+            const randomYValue = getRandomY();
+
+            // If no available space, push back to queue and wait
+            if (randomYValue === null) {
+                chatQueue.push(message);
+                return;
+            }
+
+            // Create the container element for the chat message
+            const containerElement = document.createElement("div");
+            const chatId = `chat-${Date.now()}-${Math.floor(Math.random() * 1000)}`; // Create unique ID
+            const containerElementMaxWidth = 300; // Maximum width for the chat container
+
+            containerElement.style.top = `${randomYValue}px`;
+            containerElement.style.maxWidth = `${containerElementMaxWidth}px`;
+            containerElement.style.transform = `translateX(-${containerElementMaxWidth}px)`; // Start off-screen
+            containerElement.id = chatId;
+            containerElement.classList.add('chat-container');
+
+            // Create the text span inside the container
+            const textElement = document.createElement("span");
+            textElement.innerHTML = message;
+            containerElement.appendChild(textElement);
+
+            document.body.appendChild(containerElement); // Add to document body
+
+            // Force layout recalculation to avoid stuttering on first frame
+            void containerElement.offsetWidth;
+
+            // Animate using custom easing with requestAnimationFrame for smooth movement
+            const startX = -containerElementMaxWidth;
+            const endX = window.innerWidth + containerElementMaxWidth;
+            animateWithEasing(containerElement, startX, endX, CHAT_DURATION, Easing.linear);
+        }
+
+        /**
+         * Handles new incoming chat messages with throttling
+         * 
+         * @param {Object} data - Chat message data
+         * @param {string} data.message - The message text
+         */
+        let lastProcessTime = 0;
+        const THROTTLE_TIME = 150; // Increased throttle time for smoother processing
+
+        function StreamChatFXClientLatestChat(data) {
+            chatQueue.push(data.message);
+
+            const now = Date.now();
+            if (now - lastProcessTime > THROTTLE_TIME) {
+                lastProcessTime = now;
+                processChatQueue(); // Try to process immediately
+            }
+        }
+
+        /**
+         * Animates an element using custom easing function with requestAnimationFrame
+         * 
+         * @param {HTMLElement} element - The element to animate
+         * @param {number} startX - Starting X position
+         * @param {number} endX - Ending X position
+         * @param {number} duration - Animation duration in ms
+         * @param {Function} easingFunction - The easing function to use
+         */
+        function animateWithEasing(element, startX, endX, duration, easingFunction) {
+            const startTime = performance.now();
+            let rafId;
+
+            function step(currentTime) {
+                const elapsed = currentTime - startTime;
+
+                if (elapsed >= duration) {
+                    element.style.transform = `translateX(${endX}px)`;
+
+                    if (document.body.contains(element)) {
+                        element.remove();
+                        processChatQueue();
+                    }
+                    return;
+                }
+
+                // Calculate progress with easing function
+                const linearProgress = elapsed / duration;
+                const easedProgress = easingFunction(linearProgress);
+
+                // Apply the eased progress to get current position
+                const currentX = startX + (endX - startX) * easedProgress;
+                element.style.transform = `translateX(${currentX}px)`;
+
+                rafId = requestAnimationFrame(step);
+            }
+
+            rafId = requestAnimationFrame(step);
+
+            // Cleanup function in case animation needs to be cancelled
+            return function cancelAnimation() {
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+            };
+        }
+    </script>
+    <StreamChatFXClientScript />
+</body>
+
+</html>
